@@ -1,0 +1,31 @@
+{% extends "main/base.html" %}
+{% block title %}Home{% endblock %}
+
+<!-- body content -->
+{% block content %}
+<h1 align="center">Notes</h1>
+<ul class="list-group list-group-flush" id="notes">
+	{% for note in notes %}
+		<li class="list-group-item">
+			{{ note.note }}
+			<form action="/delete-note" method="POST" class="d-inline">
+				{% csrf_token %}
+				<input type="text" value="{{ note.id }}" name="id" hidden>
+				<button type="submit" class="close">
+					<span aria-hidden='true'>&times;</span>
+				</button>
+			</form>
+		</li>
+	{% endfor %}
+
+</ul>
+<br>
+<form method="POST">
+	{% csrf_token %}
+	<textarea name="note" id="note" class="form-control"></textarea>
+	<br>
+	<div align="center">
+		<button type="submit" class="btn btn-primary">Add Note</button>
+	</div>
+</form>
+{% endblock %}
